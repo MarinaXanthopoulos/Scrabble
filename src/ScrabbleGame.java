@@ -8,18 +8,20 @@ public class ScrabbleGame {
     private boolean gameOver;
 
     // Constructor
-    public ScrabbleGame (){
+    public ScrabbleGame() {
         player1 = new Player("Player 1");
         player2 = new Player("Player 2");
         board = new Board();
+        dictionary = new Dictionary();
         currentPlayer = player1;
         gameOver = false;
     }
 
     // Game Methods
-    public void startGame(){
+    public void startGame() {
+        dictionary.loadDictionary();
         // Start game loop to swap player turns while gameOver is false
-        while(!gameOver){
+        while (!gameOver) {
             playTurn(currentPlayer);
             checkGameOver();
             nextTurn();
@@ -28,11 +30,16 @@ public class ScrabbleGame {
         displayWinner();
     }
 
-    public void nextTurn(){
+    public void nextTurn() {
         // Swap current player
+        if (currentPlayer == player1) {
+            currentPlayer = player2;
+        } else {
+            currentPlayer = player1;
+        }
     }
 
-    public void playTurn(Player player){
+    public void playTurn(Player player) {
         // Print out who's turn it is
 
         // Print out player's tiles
@@ -42,27 +49,30 @@ public class ScrabbleGame {
         // Calculate and dispplay + update score if it's valid
     }
 
-    public void checkGameOver(){
-        if (player1.getTiles().isEmpty() && player2.getTiles().isEmpty()){
+    public void checkGameOver() {
+        if (player1.getTiles().isEmpty() && player2.getTiles().isEmpty()) {
             gameOver = true;
         }
     }
 
-    public void displayWinner(){
+    public void displayWinner() {
         Player winner;
-        if (player1.getScore() > player2.getScore()){
+        if (player1.getScore() > player2.getScore()) {
             winner = player1;
-        }
-        else if (player1.getScore() < player2.getScore()){
+        } else if (player1.getScore() < player2.getScore()) {
             winner = player2;
-        }
-        else{
+        } else {
             //tie
         }
     }
 
+    public Board getBoard() {
+        return board;  // Return the current game board
+    }
+
     public static void main(String[] args) {
-        ScrabbleGame game = new ScrabbleGame();
-        game.startGame();
+        ScrabbleGame game = new ScrabbleGame(); // Initialize the game
+        GameView gameView = new GameView(game); // Create the game view
+        game.startGame(); // Start the game (although you may want to trigger this based on a button or event)
     }
 }
