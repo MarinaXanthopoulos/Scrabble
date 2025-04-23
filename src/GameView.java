@@ -7,7 +7,7 @@ import java.awt.image.BufferStrategy;
 public class GameView extends JFrame implements MouseListener, KeyListener {
     // Window Constants
     private final int WINDOW_WIDTH = 1000;
-    private final int WINDOW_HEIGHT = 850;
+    private final int WINDOW_HEIGHT = 1000;
     private final int TILE_SIZE = 23;
     private final int CELL_SIZE = 50;
 
@@ -41,6 +41,8 @@ public class GameView extends JFrame implements MouseListener, KeyListener {
         // Initialize listeners
         this.addKeyListener(this);
         this.addMouseListener(this);
+
+        repaint();
     }
 
     public void paint(Graphics g) {
