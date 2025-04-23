@@ -3,47 +3,37 @@ import java.util.ArrayList;
 public class Board {
     private Tile[][] grid;
     private int[][] scoreGrid;
+    private ArrayList<String> special;
+    public static final int SIZE = 15;
 
     public Board() {
-        grid = new Tile[15][15];
-        scoreGrid = new int[15][15];
-        initializeScoreGrid();
-    }
+        grid = new Tile[SIZE][SIZE];
+        scoreGrid = new int[SIZE][SIZE];
+        special = new ArrayList<>();
 
-    private void initializeScoreGrid(){
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 15; j++) {
-                scoreGrid[i][j] = 1;
-            }
-        }
-    }
-    public void renderBoard() {
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 15; j++) {
-                if (grid[i][j] == null) {
-                    System.out.print("- ");
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                if (row == 7 && col == 7) {
+                    special.add("center");
+                } else if ((row == 0 || row == 14 || row == 7) && (col == 0 || col == 14 || col == 7)) {
+                    special.add("triple word");
                 } else {
-                    System.out.print(grid[i][j].getLetter() + " ");
+                    special.add("regular");
                 }
             }
-            System.out.println();
         }
     }
 
-    public boolean isValidMove(String word, int x, int y, boolean isHorizontal) {
-        // Implement validation
-        return true;
+
+    public Tile[][] getGrid() {
+        return grid;
     }
 
-    public void placeTile(int x, int y, Tile tile) {
-        grid[x][y] = tile;
+    public void placeTile(Tile tile, int row, int col) {
+        grid[row][col] = tile;
     }
 
-    public Tile getTile(int x, int y) {
-        return grid[x][y];
-    }
-
-    public int getScoreMultiplier(int x, int y) {
-        return scoreGrid[x][y];
+    public String getSpecialStatus(int row, int col) {
+        return special.get(row * SIZE + col);
     }
 }

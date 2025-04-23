@@ -17,6 +17,10 @@ public class ScrabbleGame {
         gameOver = false;
     }
 
+    // Getters & setters
+    public Player getCurrentPlayer() { return currentPlayer; }
+    public Board getBoard() { return board; }
+
     // Game Methods
     public void startGame() {
         dictionary.loadDictionary();
@@ -66,13 +70,9 @@ public class ScrabbleGame {
         }
     }
 
-    public Board getBoard() {
-        return board;  // Return the current game board
-    }
-
     public static void main(String[] args) {
         ScrabbleGame game = new ScrabbleGame(); // Initialize the game
-        GameView gameView = new GameView(game); // Create the game view
         game.startGame(); // Start the game (although you may want to trigger this based on a button or event)
+        GameView gameView = new GameView(game); // Create the game view
     }
 }

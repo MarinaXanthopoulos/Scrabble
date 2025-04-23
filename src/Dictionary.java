@@ -4,27 +4,26 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Dictionary {
-    private ArrayList<String> words;
+    private ArrayList<String> wordList;
 
     public Dictionary() {
-        words = new ArrayList<>();
+        wordList = new ArrayList<>();
+        loadWords();
     }
 
-    public void loadDictionary() {
-        Scanner s;
-        File dictionaryFile = new File("Resources/dictionary.txt");
+    private void loadWords() {
         try {
-            s = new Scanner(dictionaryFile);
+            File file = new File("Resources/dictionary.txt");
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                wordList.add(scanner.nextLine().toLowerCase());
+            }
         } catch (FileNotFoundException e) {
-            System.out.println("Could not open dictionary file.");
-            return;
-        }
-        while (s.hasNextLine()) {
-            words.add(s.nextLine().toLowerCase());
+            System.out.println("Could not find dictionary file.");
         }
     }
 
     public boolean isValidWord(String word) {
-        return words.contains(word.toLowerCase());
+        return wordList.contains(word.toLowerCase());
     }
 }
