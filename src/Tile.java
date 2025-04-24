@@ -9,7 +9,7 @@ public class Tile {
     public Tile(char letter, int pointValue, ImageIcon imageIcon) {
         this.letter = letter;
         this.pointValue = pointValue;
-        this.image = image;
+        this.image = imageIcon;
     }
 
     public char getLetter() { return letter; }

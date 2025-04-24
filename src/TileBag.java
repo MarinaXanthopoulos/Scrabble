@@ -14,7 +14,7 @@ public class TileBag {
         for (int i = 0; i < letters.length(); i++) {
             char c = letters.charAt(i);
             int value = getPoints(c);
-            String filename = "Resources/tile" + (Character.toUpperCase(c) - 'A' + 1) + ".png";
+            String filename = "Resources/tile" + Character.toUpperCase(c) + ".png";
             tiles.add(new Tile(c, value, new ImageIcon(filename)));
         }
 

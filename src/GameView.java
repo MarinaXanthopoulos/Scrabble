@@ -104,8 +104,10 @@ public class GameView extends JFrame implements MouseListener, KeyListener {
         int y = WINDOW_HEIGHT - 50;
 
         for (Tile t : tiles) {
-            char c = t.getLetter();
-            g.drawImage(tileImages[Character.toUpperCase(c) - 'A'], x, y, CELL_SIZE, CELL_SIZE, null);
+            ImageIcon icon = t.getImageIcon(); // pull the tile's actual image
+            if (icon != null) {
+                g.drawImage(icon.getImage(), x, y, CELL_SIZE, CELL_SIZE, null);
+            }
             x += CELL_SIZE + 10;
         }
     }
