@@ -92,28 +92,8 @@ public class GameView extends JFrame implements MouseListener, KeyListener {
         Board board = game.getBoard();
         for (int row = 0; row < Board.SIZE; row++) {
             for (int col = 0; col < Board.SIZE; col++) {
-                int x = 50 + col * CELL_SIZE;
-                int y = 100 + row * CELL_SIZE;
-
-                // Color square based on special tile
-                String status = board.getSpecialStatus(row, col);
-                switch (status) {
-                    case "triple word": g.setColor(new Color(255, 153, 153)); break;
-                    case "double word": g.setColor(new Color(255, 204, 204)); break;
-                    case "double letter": g.setColor(new Color(173, 216, 230)); break;
-                    case "center": g.setColor(Color.PINK); break;
-                    default: g.setColor(new Color(210, 180, 140));
-                }
-
-                g.fillRect(x, y, CELL_SIZE, CELL_SIZE);
-                g.setColor(Color.BLACK);
-                g.drawRect(x, y, CELL_SIZE, CELL_SIZE);
-
-                Tile tile = board.getGrid()[row][col];
-                if (tile != null) {
-                    char letter = tile.getLetter();
-                    g.drawImage(tileImages[Character.toUpperCase(letter) - 'A'], x, y, CELL_SIZE, CELL_SIZE, null);
-                }
+                Spot spot = board.getSpot(row, col);
+                spot.draw(g, CELL_SIZE, 50, 100, tileImages); // let the spot handle all drawing
             }
         }
     }

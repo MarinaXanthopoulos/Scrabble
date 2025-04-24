@@ -1,39 +1,30 @@
 import java.util.ArrayList;
 
 public class Board {
-    private Tile[][] grid;
-    private int[][] scoreGrid;
-    private ArrayList<String> special;
     public static final int SIZE = 15;
+    public Spot[][] grid;
 
     public Board() {
-        grid = new Tile[SIZE][SIZE];
-        scoreGrid = new int[SIZE][SIZE];
-        special = new ArrayList<>();
+        grid = new Spot[SIZE][SIZE];
 
+        // Setup board with types
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
+                String special;
                 if (row == 7 && col == 7) {
-                    special.add("center");
+                    special = "center";
                 } else if ((row == 0 || row == 14 || row == 7) && (col == 0 || col == 14 || col == 7)) {
-                    special.add("triple word");
+                    special = "triple word";
                 } else {
-                    special.add("regular");
+                    special = "regular";
                 }
+                grid[row][col] = new Spot(row, col, special);
             }
         }
     }
 
 
-    public Tile[][] getGrid() {
-        return grid;
-    }
-
-    public void placeTile(Tile tile, int row, int col) {
-        grid[row][col] = tile;
-    }
-
-    public String getSpecialStatus(int row, int col) {
-        return special.get(row * SIZE + col);
-    }
+    public Spot getSpot(int row, int col){ return grid[row][col]; }
+    public void placeTile(Tile tile, int row, int col) { grid[row][col].setTile(tile); }
+    public Spot[][] getSpots() { return grid; }
 }

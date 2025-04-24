@@ -14,6 +14,7 @@ public class Tile {
 
     public char getLetter() { return letter; }
     public int getPointValue() { return pointValue; }
+    public ImageIcon getImageIcon() { return image; }
 
     // Make sure Tiles have a location saved in row/col
     public int getRow() { return row; }
