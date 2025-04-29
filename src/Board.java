@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 
 public class Board {
+    // Instance Variables
     public static final int SIZE = 15;
     public Spot[][] grid;
 
     public Board() {
         grid = new Spot[SIZE][SIZE];
 
-        // Setup board with types
+        // Setup board with special types
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
                 String special;
@@ -22,7 +23,6 @@ public class Board {
             }
         }
     }
-
 
     public Spot getSpot(int row, int col){ return grid[row][col]; }
     public void placeTile(Tile tile, int row, int col) { grid[row][col].setTile(tile); }

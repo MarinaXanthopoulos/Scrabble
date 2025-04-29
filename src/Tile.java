@@ -1,6 +1,7 @@
 import javax.swing.*;
 
 public class Tile {
+    // Instance variables
     private char letter;
     private int pointValue;
     private ImageIcon image;
@@ -12,6 +13,7 @@ public class Tile {
         this.image = imageIcon;
     }
 
+    // Getters & Setters
     public char getLetter() { return letter; }
     public int getPointValue() { return pointValue; }
     public ImageIcon getImageIcon() { return image; }

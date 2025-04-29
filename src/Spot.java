@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 
 public class Spot {
@@ -18,9 +19,7 @@ public class Spot {
     public int getCol() { return col; }
     public String getSpecial() { return special; }
     public Tile getTile() { return tile; }
-    public boolean isEmpty() {
-        return tile == null;
-    }
+    public boolean isEmpty() { return tile == null; }
 
     public void setTile(Tile tile) {
         this.tile = tile;
@@ -32,7 +31,7 @@ public class Spot {
     }
 
     public void draw (Graphics g, int cellSize, int offsetX, int offsetY, Image[] tileImages) {
-        // Convert the grid row/col into pixel x/y positions
+        // Convert the grid row/col into pixel x/y positions using offset values
         int x = offsetX + col * cellSize; // X = left offset + width of each cell * column index
         int y = offsetY + row * cellSize; // Y = top offset + height of each cell * row index
 
@@ -41,7 +40,7 @@ public class Spot {
             case "triple word": g.setColor(new Color(255, 153, 153)); break;     // light red
             case "double word": g.setColor(new Color(255, 204, 204)); break;     // light pink
             case "double letter": g.setColor(new Color(173, 216, 230)); break;   // light blue
-            case "center": g.setColor(Color.PINK); break;                        // light pink center
+            case "center": g.setColor(Color.PINK); break;                                 // light pink center
             default: g.setColor(new Color(210, 180, 140));                       // tan for regular
         }
 
@@ -54,11 +53,9 @@ public class Spot {
 
         // If this spot has a tile, draw its image
         if (tile != null) {
-            char c = tile.getLetter();                    // Get the tile's letter (e.g., 'C')
-            int index = Character.toUpperCase(c) - 'A';   // Convert letter to array index (A = 0, B = 1, ..., Z = 25)
-
-            if (index >= 0 && index < tileImages.length) {
-                g.drawImage(tileImages[index], x, y, cellSize, cellSize, null);
+            ImageIcon icon = tile.getImageIcon();
+            if (icon != null) {
+                g.drawImage(icon.getImage(), x, y, cellSize, cellSize, null);
             }
         }
     }
