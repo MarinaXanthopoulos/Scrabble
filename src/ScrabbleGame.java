@@ -17,8 +17,8 @@ public class ScrabbleGame {
         currentPlayer = player1;
 
         // Deal 7 tiles  to players
-        dealTiles(player1, 7);
-        dealTiles(player2, 7);
+        dealTiles(player1);
+        dealTiles(player2);
     }
 
     // Getters & setters
@@ -27,16 +27,15 @@ public class ScrabbleGame {
     public Player getPlayer2() { return player2; }
     public Board getBoard() { return board; }
 
-    // Game Methods //
     // Deal tile's to player
-    private void dealTiles(Player p, int numNeeded) {
-        for (int i = 0; i < numNeeded; i++) {
-            if (!bag.isEmpty()) {
-                p.addTile(bag.deal());
-            }
+    private void dealTiles(Player p) {
+        // Make a loop to continuously add tiles to make sure player has 7 at a time
+        while (p.getTiles().size() < 7 && !bag.isEmpty()) {
+            p.addTile(bag.deal());
         }
     }
 
+    // Place a tile on the board, check if it's a real word, check if the location is allowed
     public boolean playWord(String word, int startRow,int startCol, boolean horizontal) {
         // Check if it's an actual word
         if(!dictionary.isValidWord(word)) {
@@ -48,16 +47,11 @@ public class ScrabbleGame {
             return false;
         }
 
+        // Calculate the score
         int score = placeWord(word, startRow, startCol, horizontal);
-
-        if (score == -1) {
-            return false;
-        }
 
         // Add score and refill their hand
         currentPlayer.addScore(score);
-        int tilesUsed = countTilesUsed(word, startRow, startCol, horizontal);
-        dealTiles(currentPlayer, tilesUsed);
 
         // Switch to other player for their turn
         nextTurn();
@@ -66,8 +60,9 @@ public class ScrabbleGame {
 
     private boolean canPlaceWord(String word, int startRow, int startCol, boolean horizontal) {
         for (int i = 0; i < word.length(); i++) {
-            int row = horizontal ? startRow : startRow + i;
-            int col = horizontal ? startCol + i : startCol;
+            // Calculate position on the board
+            int row = calculateRow(startRow, horizontal, i);
+            int col = calculateCol(startCol, horizontal, i);
 
             // If it's outside the board, cancel the move
             if (row >= Board.SIZE || col >= Board.SIZE) {
@@ -123,11 +118,12 @@ public class ScrabbleGame {
             score += match.getPointValue();
         }
 
-        // Remove used tiles from the player's hand
+        // Remove used tiles from the player's hand and add a new one for what we take away
         for (Tile t : used) {
             currentPlayer.removeTile(t);
         }
 
+        dealTiles(currentPlayer);
         return score;
     }
 
@@ -145,21 +141,6 @@ public class ScrabbleGame {
         } else {
             return startCol;
         }
-    }
-
-    private int countTilesUsed(String word, int startRow, int startCol, boolean horizontal) {
-        int used = 0;
-
-        for (int i = 0; i < word.length(); i++) {
-            int row = calculateRow(startRow, horizontal, i);
-            int col = calculateCol(startCol, horizontal, i);
-
-            Spot spot = board.getSpot(row, col);
-            if (spot.getTile() == null) {
-                used++;
-            }
-        }
-        return used;
     }
 
     public boolean exchangeTiles(char letter) {
@@ -189,6 +170,7 @@ public class ScrabbleGame {
             }
         }
 
+        nextTurn();
         return true;
     }
 
