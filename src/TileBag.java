@@ -18,10 +18,6 @@ public class TileBag {
             String filename = "Resources/tile" + Character.toUpperCase(c) + ".png";
             tiles.add(new Tile(c, value, new ImageIcon(filename)));
         }
-        // Add two blank tile
-        tiles.add(new Tile(' ', 0, new ImageIcon("Resources/blank.png")));
-        tiles.add(new Tile(' ', 0, new ImageIcon("Resources/blank.png")));
-
 
         tilesLeft = tiles.size();
         shuffle();
@@ -41,22 +37,21 @@ public class TileBag {
         }
     }
 
+    // Randomly swap tiles like cards in cardgame
     public void shuffle() {
         for (int i = tiles.size() - 1; i >= 0; i--) {
             // Pick random index from 0 to i
-            int r = (int)(Math.random() * (i + 1));
+            int random = (int)(Math.random() * (i + 1));
             // Swap current tile with random one
-            Tile temp = tiles.get(i);
-            tiles.set(i, tiles.get(r));
-            tiles.set(r, temp);
+            Tile copy = tiles.get(random);
+            tiles.set(i, tiles.get(random));
+            tiles.set(random, copy);
         }
         // Reset count of tiles left
         tilesLeft = tiles.size();
     }
 
-    public boolean isEmpty() {
-        return tilesLeft == 0;
-    }
+    public boolean isEmpty() { return tilesLeft == 0; }
 
     public Tile deal() {
         // Deal one tile from the top of the shuffled pile
