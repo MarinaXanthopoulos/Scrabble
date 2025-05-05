@@ -48,7 +48,8 @@ public class ScrabbleGame {
         }
 
         // Calculate the score
-        int score = placeWord(word, startRow, startCol, horizontal);
+        int score = calculateScore(word, startRow, startCol, horizontal);
+        placeWord(word, startRow, startCol, horizontal);
 
         // Add score and refill their hand
         currentPlayer.addScore(score);
@@ -141,6 +142,44 @@ public class ScrabbleGame {
         } else {
             return startCol;
         }
+    }
+
+    // Score calculator based off of if the tiles are on a special square or not
+    private int calculateScore(String word, int startRow, int startCol, boolean horizontal) {
+        int score = 0;
+        int wordMultiplier = 1;
+
+        for (int i = 0; i < word.length(); i++) {
+            int row;
+            int col;
+
+            if (horizontal) {
+                row = startRow;
+                col = startCol + i;
+            } else {
+                row = startRow + i;
+                col = startCol;
+            }
+            Spot spot = board.getSpot(row, col);
+            char letter = word.charAt(i);
+            int baseValue = bag.getPoints(letter);
+            int letterScore = baseValue;
+
+            if (spot.getTile() == null) {
+                String special = spot.getSpecial();
+                if (special.equals("dl")) {
+                    letterScore = letterScore * 2;
+                } else if (special.equals("tl")) {
+                    letterScore = letterScore * 3;
+                } else if (special.equals("dw") || special.equals("center")) {
+                    wordMultiplier = wordMultiplier * 2;
+                } else if (special.equals("tw")) {
+                    wordMultiplier = wordMultiplier * 3;
+                }
+            }
+            score = score + letterScore;
+        }
+        return score * wordMultiplier;
     }
 
     public boolean exchangeTiles(char letter) {

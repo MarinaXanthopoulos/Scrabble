@@ -24,7 +24,7 @@ public class TileBag {
     }
 
     // Return point value based on what letter it is
-    private int getPoints(char letter) {
+    public int getPoints(char letter) {
         switch (Character.toUpperCase(letter)) {
             case 'Q': case 'Z': return 10;
             case 'J': case 'X': return 8;
