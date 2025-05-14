@@ -1,3 +1,5 @@
+// Scrabble by Marina
+
 import java.util.ArrayList;
 
 public class ScrabbleGame {

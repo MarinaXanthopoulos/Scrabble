@@ -1,3 +1,5 @@
+// GameView
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -200,7 +202,7 @@ public class GameView extends JFrame implements MouseListener, KeyListener {
         g.drawString("Typed Word: " + typedWord, 50, 70);
         g.drawString("Direction: " + (horizontal ? "→ Horizontal" : "↓ Vertical"), 50, 95);
 
-        int infoX = 820;
+        int infoX = 815;
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 18));
@@ -223,6 +225,9 @@ public class GameView extends JFrame implements MouseListener, KeyListener {
         g.drawString("- ENTER = place word", infoX, 290);
         g.drawString("- Click Draw Bag to exchange", infoX, 310);
         g.drawString("- Click End Game to finish", infoX, 330);
+        g.drawString("- No blank tiles", infoX, 350);
+        g.drawString(" - Build off words, neighboring", infoX, 370);
+        g.drawString("   words don't have to be real", infoX, 390);
     }
 
     private void drawEndGameButton(Graphics g) {
